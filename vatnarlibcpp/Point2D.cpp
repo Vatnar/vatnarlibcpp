@@ -17,7 +17,7 @@ bool Point2D::operator==(const Point2D &other) const {
 }
 
 double Point2D::distance(const Point2D &other) const {
-	return sqrt(this->x * this->x + this->y * this->y);
+	return std::sqrt(std::pow(this->x-other.x,2) + std::pow(this->y-other.y,2));
 }
 
 std::string Point2D::toString() const {
