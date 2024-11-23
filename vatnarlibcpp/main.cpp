@@ -2,7 +2,7 @@
 
 #include "Circle2D.h"
 #include "Point2D.h"
-// Fix memory ownersip of circle.
+// Fix memory ownership of circle.
 int main() {
     // Point2D point(4.2414125, 22.4215134);
     auto p = Point2D(3, 4);
