@@ -7,11 +7,11 @@
 
 class Circle2D {
 public:
-    Circle2D(const Point2D &center, double radius);
+    Circle2D(const Vector2 &center, double radius);
     // Is currently non-responsive to change of perimeter.
-    Circle2D(const Point2D &center, const Point2D &perimeter);
+    Circle2D(const Vector2 &center, const Vector2 &perimeter);
     [[nodiscard]] std::string toString() const;
-    const Point2D &center;
+    const Vector2 &center;
     double radius;
 };
 

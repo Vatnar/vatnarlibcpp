@@ -4,9 +4,9 @@
 
 #include "Circle2D.h"
 
-Circle2D::Circle2D( const Point2D &center,  const double radius): center(center), radius(radius){}
+Circle2D::Circle2D( const Vector2 &center,  const double radius): center(center), radius(radius){}
 
-Circle2D::Circle2D( const Point2D &center, const Point2D &perimeter): center(center), radius(center.distance(perimeter)){}
+Circle2D::Circle2D( const Vector2 &center, const Vector2 &perimeter): center(center), radius(center.distance(perimeter)){}
 
 
 std::string Circle2D::toString() const {
