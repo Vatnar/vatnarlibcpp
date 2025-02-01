@@ -1,3 +1,0 @@
-D:/dev/VatnarLib/vatnarlibcpp/cmake-build-debug/CMakeFiles/vatnarlibcpp.dir
-D:/dev/VatnarLib/vatnarlibcpp/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/dev/VatnarLib/vatnarlibcpp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
