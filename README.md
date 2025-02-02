@@ -12,17 +12,13 @@ basic graphic rendering and animations.
 
 
 ## Planned Features
-- **Colours, textures...**
-
-
-## Planned Features
-- **Window creation with OpenGL**: Set up a basic window with OpenGL.
+- **Window creation with SMFL**
 - **2D Drawing**: Draw 2D shapes and objects.
 - **Colors**: Integrate color manipulation for shapes and backgrounds.
 - **Camera movement**: Enable a moving camera for 3D navigation.
 - **3D Drawing**: Support 3D shape rendering.
 - **Interactive Drawing**: Allow user input for interactive graphics.
-
+- **Colours, textures...**
 ### Future Ideas
 - **Interactive Terminal**: Add a terminal interface for commands and adjustments.
 - **Raytracing**: Integrate with Pandora raytracing library
