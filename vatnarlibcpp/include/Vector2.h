@@ -1,5 +1,4 @@
-#ifndef POINT_2D_H
-#define POINT_2D_H
+#pragma once
 #include <string>
 namespace Vatnar {
     class Vector2 {
@@ -31,10 +30,12 @@ namespace Vatnar {
         // Scalar operations
         Vector2 operator *(double scalar) const;
         Vector2 operator /(double scalar) const;
+        Vector2 &operator*=(double scalar);
+        Vector2 &operator/=(double scalar);
 
         // Dot product
-        Vector2 dot(const Vector2 &other) const;
-        Vector2 operator *(const Vector2 &other) const;
+        double dot(const Vector2 &other) const;
+        double operator *(const Vector2 &other) const;
 
         // Compare vectors
         bool operator ==(const Vector2 &other) const;
@@ -47,6 +48,7 @@ namespace Vatnar {
 
 
         [[nodiscard]] std::string toString() const;
+        friend std::ostream& operator<<(std::ostream& os, const Vector2& v);
 
 
     private:
@@ -54,5 +56,3 @@ namespace Vatnar {
         double Y;
     };
 }
-
-#endif //POINT_2D_H
