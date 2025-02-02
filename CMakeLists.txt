@@ -15,8 +15,7 @@ FetchContent_MakeAvailable(SFML)
 
 # Add executable
 add_executable(VatnarLib src/main.cpp src/Vector2.cpp src/Point2.cpp
-        src/Renderer.cpp
-        src/Renderer.h)
+        src/Renderer.cpp)
 
 # Include header files and link libraries
 target_include_directories(VatnarLib PRIVATE include)
