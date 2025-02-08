@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.26)
 project(VatnarLib)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native -DNDEBUG")
 include(FetchContent)
 FetchContent_Declare(SFML
         GIT_REPOSITORY https://github.com/SFML/SFML.git
@@ -14,8 +14,7 @@ FetchContent_MakeAvailable(SFML)
 
 
 # Add executable
-add_executable(VatnarLib src/main.cpp src/Vector2.cpp src/Point2.cpp
-        src/Renderer.cpp)
+add_executable(VatnarLib src/main.cpp src/Renderer.cpp)
 
 # Include header files and link libraries
 target_include_directories(VatnarLib PRIVATE include)
