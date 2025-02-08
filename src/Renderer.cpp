@@ -17,7 +17,7 @@ namespace Vatnar {
 
 	bool Renderer::init() {
 		window.create(sf::VideoMode(WINDOW_SIZE), "EXAMPLE WINDOW");
-		window.setFramerateLimit(30);
+		window.setFramerateLimit(2000);
 
 		return true;
 	}
@@ -62,12 +62,12 @@ namespace Vatnar {
 		// 0xFF6B6BFF pinkish orange
 		// 0xFFFF6B6B purple blue
 
-		constexpr int num_colors = 16;
+		constexpr int num_colors = 540;
 		constexpr int num_steps = 2 * num_colors;
 
-		uint32_t first_color = 0xFFFF6B6B;
-		uint32_t last_color = 0xFFFF6B00;
-
+		uint32_t first_color = 0xFFFF6B6B; // nice ons
+		// uint32_t last_color = 0xFFFF6B00; //nice ones
+		uint32_t last_color = 0xFF8B8BFF;
 		std::array<uint32_t, num_steps> colors;
 
 		// Precompute interpolated colors (without tint)
@@ -78,27 +78,18 @@ namespace Vatnar {
 		}
 
 		// Apply tint to every second color
-		for (int i = 1; i < num_steps; i += 2) {
-			tint_color(colors[i]);
-		}
+		// for (int i = 1; i < num_steps; i += 2) {
+		// 	tint_color(colors[i]);
+		// }
 
-		auto start = std::chrono::high_resolution_clock::now();
 
 		for (size_t i = 0; i < pixels.size(); ++i) {
 			int index = (i * num_steps) / pixels.size(); // Map `i` to color index
 			pixels[i] = colors[index];
 		}
 
-
-		const auto end = std::chrono::high_resolution_clock::now();
-
 		texture.update(reinterpret_cast<uint8_t*>(pixels.data()));
 
-
-		std::cout << "Time: "
-				<< std::chrono::duration_cast<std::chrono::milliseconds>(
-					end - start).count()
-				<< " ms\n" << std::endl;
 		sf::Sprite sprite(texture);
 
 		while (window.isOpen()) {
