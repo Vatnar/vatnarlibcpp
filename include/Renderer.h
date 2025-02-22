@@ -1,44 +1,18 @@
-#pragma once
-#include <SFML/Graphics.hpp>
+#ifndef VATNAR_H
+#define VATNAR_H
 
-namespace Vatnar {
-	/**
-	 * @brief Static class Renderer with functions regarding drawing and
-	 rendering to window.
-	 *
-	 */
-	class Renderer {
-	public:
-		Renderer() = delete; // Purely static class
-		static bool init();
-		static constexpr uint32_t lerpColor(const uint32_t &a, const uint32_t
-				&b, float t);
-		constexpr static void tint_color(uint32_t &color);
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
+#include <imgui-SFML.h>
+#include <imgui.h>
+#include "Game.h"
 
-		static bool Run();
-	private:
-		/**
-		 * @brief Draw() is called every frame, things that are to be drawn
-		 * on per-frame basis should be called or placed in draw
-		 * @returns void
-		 */
-		static void DrawFrameInfo(std::array<std::chrono::duration<double, std::milli>, 5> &times);
+namespace Vatnar::Renderer {
+	bool WindowInit(sf::RenderWindow &window);
+	bool EventLoop(sf::RenderWindow &window);
+	void Update(const Game &game, sf::Clock &deltaClock);
 
-		static void initCircles
-		(std::vector<sf::CircleShape> &circles);
-
-
-
-
-
-		/**
-		* @brief Draws all objects in a container.
-		* @tparam Container A standard container type (e.g., std::vector, std::list).
-		* @param objects The container holding drawable objects.
-		*/
-		template<class Container>
-		static void DrawContainer(const Container& objects);
-
-		static sf::RenderWindow window;
-	};
+	void AddDrawable(std::unique_ptr<sf::Drawable> drawable);
 }
+
+#endif // VATNAR_H

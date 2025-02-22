@@ -1,0 +1,9 @@
+{
+  "name" : "vatnarlib",
+  "version-string" : "1.0.0",
+  "builtin-baseline" : "33e9c99208736b713cabe4490e15235f62f893d4",
+  "dependencies" : [ {
+    "name" : "imgui-sfml",
+    "version>=" : "2.6#1"
+  } ]
+}
