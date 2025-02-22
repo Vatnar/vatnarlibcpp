@@ -14,7 +14,6 @@ namespace Vatnar::Renderer {
 	}
 
 	void AddDrawable(std::unique_ptr<sf::Drawable> drawable) {
-		std::cout << "Added drawable to queue\n";
 		perFrameObjects.emplace_back(std::move(drawable));
 	}
 

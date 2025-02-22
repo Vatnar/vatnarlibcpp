@@ -17,7 +17,7 @@ namespace Vatnar {
 		virtual ~Collider2D() = default;
 
 		virtual void Update(
-			std::vector<std::unique_ptr<Collider2D> >
+			std::vector<std::shared_ptr<Collider2D> >
 			colliders, sf::Time dt) = 0;
 
 		virtual void Init() = 0;
@@ -31,7 +31,7 @@ namespace Vatnar {
 		sf::Vector2f point4 = {-100, 100};
 
 		void Update(
-			std::vector<std::unique_ptr<Collider2D> >
+			std::vector<std::shared_ptr<Collider2D> >
 			colliders, sf::Time dt) override {
 			// Check if any collisions happen.
 			// set velocity to account for collision

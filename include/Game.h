@@ -51,11 +51,9 @@ namespace Vatnar {
 			// If the object has a collider, register it globally
 			if constexpr (std::is_base_of_v<SpriteObject, T>) {
 				if (ref.spriteComponents.collision) {
-					auto collider = std::make_unique<BoxCollider>(
-						*ref.spriteComponents.collision);
-					ref.spriteComponents.physics->collider = collider.get();
-					// Keep reference
-					colliders.push_back(std::move(collider));
+					ref.spriteComponents.physics->collider = std::make_unique<BoxCollider>();
+
+					colliders.push_back(std::move(ref.spriteComponents.physics->collider));
 				}
 			}
 
@@ -65,7 +63,7 @@ namespace Vatnar {
 
 	private:
 		std::vector<std::unique_ptr<IGameObject> > objects;
-		std::vector<std::unique_ptr<Collider2D> >  colliders;
+		std::vector<std::shared_ptr<Collider2D> >  colliders;
 	};
 }
 #endif //GAME_H
