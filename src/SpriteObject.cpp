@@ -12,7 +12,8 @@
 void Vatnar::SpriteObject::Update(sf::Time dt) {
 	if (spriteComponents.physics) {
 		spriteComponents.physics->Update();
-		sprite.move(spriteComponents.physics->velocity.x*dt.asSeconds(), spriteComponents.physics->velocity.y*dt.asSeconds());
+		position += spriteComponents.physics->velocity*dt.asSeconds();
+		sprite.setPosition(position);
 	}
 	if (updateFunc) updateFunc(*this, dt);
 

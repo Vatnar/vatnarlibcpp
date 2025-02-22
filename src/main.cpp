@@ -35,7 +35,7 @@ int main() {
 		object.sprite.setPosition(200, 200);
 		// initial velocity apear not working
 		object.spriteComponents.physics.emplace(sf::Vector2f(300, 300), 3.0f, true);
-		object.spriteComponents.collision = std::make_unique<Vatnar::BoxCollider>();
+		object.spriteComponents.collision = std::make_unique<Vatnar::CircleCollider>();
 
 
 

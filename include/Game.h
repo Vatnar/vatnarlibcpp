@@ -51,7 +51,7 @@ namespace Vatnar {
 			// If the object has a collider, register it globally
 			if constexpr (std::is_base_of_v<SpriteObject, T>) {
 				if (ref.spriteComponents.collision) {
-					ref.spriteComponents.physics->collider = std::make_unique<BoxCollider>();
+					ref.spriteComponents.physics->collider = std::make_unique<CircleCollider>(&ref);
 
 					colliders.push_back(std::move(ref.spriteComponents.physics->collider));
 				}

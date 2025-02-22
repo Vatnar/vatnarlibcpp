@@ -10,10 +10,13 @@
 namespace Vatnar {
 	struct Collision2D {
 		// From origin to contact point
-		sf::Vector2f normal = {0,0}; // normal being 0, 0 means no collisions
+		sf::Vector2f normal = {0, 0}; // normal being 0, 0 means no collisions
 	};
+
 	struct Collider2D {
-		Collision2D collision;
+		IGameObject *parent = nullptr;
+		Collision2D  collision;
+
 		virtual ~Collider2D() = default;
 
 		virtual void Update(
@@ -32,13 +35,43 @@ namespace Vatnar {
 
 		void Update(
 			std::vector<std::shared_ptr<Collider2D> >
-			colliders, sf::Time dt) override {
+			otherColliders, sf::Time dt) override {
 			// Check if any collisions happen.
+			for (auto otherCollider: otherColliders) {
+				//Get closest distance to otherCollider
+			}
 			// set velocity to account for collision
 
 			// If collides
 			//collision.Normal =
 			// else
+			collision.normal = {0, 0};
+		}
+
+		void Init() override {
+			// Add to callable list.
+		}
+	};
+
+	struct CircleCollider final : Collider2D {
+		float radius = 100;
+
+		void Update(std::vector<std::shared_ptr<Collider2D> >
+			otherColliders, sf::Time dt) override {
+
+			// Current implementation returns on first collision, so one collision per fram
+			for (auto otherCollider: otherColliders) {
+				if (auto other = dynamic_cast<CircleCollider *>(otherCollider.get())) {
+					// otherCollider is a CircleCollider
+					auto pos = parent->getPosition();
+					auto otherPos = other->parent->getPosition();
+					sf::Vector2f diff = otherPos - pos;
+					if (std::hypot(diff.x, diff.y) <= radius +other->radius) {
+						collision.normal = diff;
+						return;
+					}
+				}
+			}
 			collision.normal = {0, 0};
 		}
 
@@ -61,15 +94,14 @@ namespace Vatnar {
 			}
 			if (collider) {
 				auto &normal = collider->collision.normal;
-				if (normal != sf::Vector2f(0,0)) {
+				if (normal != sf::Vector2f(0, 0)) {
 					// Collision happened
-					velocity.x -= mass*mass*normal.x;
-					velocity.y -= mass*mass*normal.y;
-					normal = sf::Vector2f(0,0); // Reset collision
+					velocity.x -= mass * mass * normal.x;
+					velocity.y -= mass * mass * normal.y;
+					normal = sf::Vector2f(0, 0); // Reset collision
 				}
 			}
-			if (collider && (collider->collision.normal != sf::Vector2f(0, 0))){
-			}
+			if (collider && collider->collision.normal != sf::Vector2f(0, 0)) {}
 		}
 	};
 }
