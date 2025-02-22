@@ -14,19 +14,19 @@ void Vatnar::Game::Update(sf::Time dt) const {
 }
 
 void Vatnar::Game::CheckCollisions2D(sf::Time dt) const {
+
+	// for loop dont run
 	for (const auto &collider: colliders) {
 		// Create a new vector excluding the current collider
+
 		std::vector<std::shared_ptr<Collider2D> > otherColliders;
 		std::copy_if(
-	colliders.begin(), colliders.end(),
-	std::back_inserter(otherColliders),
-	[&](const std::shared_ptr<Collider2D>& c) {
-		return c.get() != collider.get();
-	}
-);
-
-
-
+			colliders.begin(), colliders.end(),
+			std::back_inserter(otherColliders),
+			[&](const std::shared_ptr<Collider2D> &c) {
+				return c.get() != collider.get();
+			}
+		);
 		// Update collider with the filtered list
 		collider->Update(otherColliders, dt);
 	}

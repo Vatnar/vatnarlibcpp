@@ -5,6 +5,7 @@
 
 #include "Components2D.h"
 #include "IGameObject.h"
+#include "SpriteObject.h"
 
 namespace Vatnar {
 	class SpriteObject;
@@ -39,8 +40,13 @@ namespace Vatnar {
 		// and .init for each.
 
 		// Call for each added object to add them to the game loop.
+	private:
+		std::vector<std::unique_ptr<IGameObject> > objects;
+		std::vector<std::shared_ptr<Collider2D> >  colliders;
+	public:
 		template<typename T>
 		T &AddObject() {
+
 			static_assert(
 				std::is_base_of_v<IGameObject, T>,
 				"T must derive from IGameObject");
@@ -48,22 +54,15 @@ namespace Vatnar {
 			auto obj = std::make_unique<T>();
 			T &  ref = *obj;
 
-			// If the object has a collider, register it globally
-			if constexpr (std::is_base_of_v<SpriteObject, T>) {
-				if (ref.spriteComponents.collision) {
-					ref.spriteComponents.physics->collider = std::make_unique<CircleCollider>(&ref);
-
-					colliders.push_back(std::move(ref.spriteComponents.physics->collider));
-				}
-			}
-
 			objects.push_back(std::move(obj));
 			return ref;
 		}
+		void AddColliderSprite(SpriteObject &gameObject, std::unique_ptr<Collider2D> collider) {
 
-	private:
-		std::vector<std::unique_ptr<IGameObject> > objects;
-		std::vector<std::shared_ptr<Collider2D> >  colliders;
+				colliders.push_back(std::move(collider));
+		}
+
+
 	};
 }
 #endif //GAME_H

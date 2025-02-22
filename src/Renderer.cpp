@@ -35,6 +35,7 @@ namespace Vatnar::Renderer {
 		while (game.window->isOpen()) {
 			EventLoop(*game.window);
 			sf::Time dt = deltaClock.restart();
+
 			ImGui::SFML::Update(*game.window, dt);
 
 			ImGui::ShowDemoWindow();

@@ -4,8 +4,11 @@
 
 #ifndef PHYSICSCOMPONENT_H
 #define PHYSICSCOMPONENT_H
+#include <iostream>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
+
+#include "IGameObject.h"
 
 namespace Vatnar {
 	struct Collision2D {
@@ -55,10 +58,12 @@ namespace Vatnar {
 
 	struct CircleCollider final : Collider2D {
 		float radius = 100;
-
+		CircleCollider() = default;
+		explicit CircleCollider(IGameObject* parentObject) {
+			parent = parentObject;
+		}
 		void Update(std::vector<std::shared_ptr<Collider2D> >
 			otherColliders, sf::Time dt) override {
-
 			// Current implementation returns on first collision, so one collision per fram
 			for (auto otherCollider: otherColliders) {
 				if (auto other = dynamic_cast<CircleCollider *>(otherCollider.get())) {
@@ -68,6 +73,7 @@ namespace Vatnar {
 					sf::Vector2f diff = otherPos - pos;
 					if (std::hypot(diff.x, diff.y) <= radius +other->radius) {
 						collision.normal = diff;
+						std::cout << "Distanec" <<std::hypot(diff.x, diff.y)<< std::endl;
 						return;
 					}
 				}
@@ -82,9 +88,9 @@ namespace Vatnar {
 
 
 	struct Physics2D {
+		bool                        affectedByGravity = true;
 		sf::Vector2f                velocity;
 		float                       mass              = 1.0f;
-		bool                        affectedByGravity = true;
 		std::unique_ptr<Collider2D> collider;
 
 		// Does not apply dt
@@ -92,17 +98,16 @@ namespace Vatnar {
 			if (affectedByGravity) {
 				velocity.y += 15 * 9.81f; // Gravity simulation
 			}
-			if (collider) {
+			if (collider && collider->collision.normal != sf::Vector2f(0.f, 0.f)) {
 				auto &normal = collider->collision.normal;
-				if (normal != sf::Vector2f(0, 0)) {
 					// Collision happened
 					velocity.x -= mass * mass * normal.x;
 					velocity.y -= mass * mass * normal.y;
 					normal = sf::Vector2f(0, 0); // Reset collision
 				}
 			}
-			if (collider && collider->collision.normal != sf::Vector2f(0, 0)) {}
-		}
+			// if (collider && collider->collision.normal != sf::Vector2f(0, 0)) {}
+		// }
 	};
 }
 #endif //PHYSICSCOMPONENT_H
