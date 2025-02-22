@@ -1,5 +1,9 @@
 #include "Renderer.h"
 
+#include <imgui-SFML.h>
+#include <imgui.h>
+#include <iostream>
+
 namespace Vatnar::Renderer {
 	std::vector<std::unique_ptr<sf::Drawable>> perFrameObjects;
 
@@ -10,6 +14,7 @@ namespace Vatnar::Renderer {
 	}
 
 	void AddDrawable(std::unique_ptr<sf::Drawable> drawable) {
+		std::cout << "Added drawable to queue\n";
 		perFrameObjects.emplace_back(std::move(drawable));
 	}
 
@@ -34,14 +39,19 @@ namespace Vatnar::Renderer {
 			ImGui::SFML::Update(*game.window, dt);
 
 			ImGui::ShowDemoWindow();
-			ImGui::SFML::Render(*game.window);
+			ImGui::SFML::Render(*game.window); // Render ImGui first
 
-			perFrameObjects.clear();
-			game.Update(dt);
+			game.Update(dt); // Update game objects (calls AddDrawable)
+			game.CheckCollisions2D(dt);
+
+			// Draw SFML objects
+			game.window->clear();
 			for (auto &obj : perFrameObjects) {
 				game.window->draw(*obj);
 			}
-			perFrameObjects.clear();
+			game.window->display();
+			perFrameObjects.clear(); // Only clear after drawing
 		}
 	}
+
 }

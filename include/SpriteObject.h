@@ -5,7 +5,7 @@
 #include <functional>
 #include <optional>
 
-#include "PhysicsComponent.h"
+#include "Components2D.h"
 
 namespace Vatnar {
 	class SpriteObject final : public IGameObject {
@@ -16,11 +16,11 @@ namespace Vatnar {
 		std::function<void(SpriteObject &, sf::Time)> updateFunc;
 		std::function<void(SpriteObject &)>           initFunc;
 		struct SpriteComponents {
-			std::optional<PhysicsComponent> physics;
+			std::optional<Physics2D> physics;
+			std::unique_ptr<Collider2D> collision;
 		} spriteComponents;
 		void Update(sf::Time dt) override;
 		bool Init() override;
-	private:
 
 	};
 }

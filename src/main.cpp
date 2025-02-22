@@ -24,15 +24,29 @@ int main() {
 	auto& bouncyball = game.AddObject<Vatnar::SpriteObject>();
 
 	bouncyball.initFunc = [&](Vatnar::SpriteObject& object) {
-		object.sprite.setColor(sf::Color::White);
-		object.spriteComponents.physics.emplace(sf::Vector2f(3, 3), 3.0f, true);
-		object.sprite.setPosition(0, 0);
+		if (!object.texture.create(1, 1)) {
+			std::cerr << "Failed to create texture!" << std::endl;
+			return;
+		}
+		sf::Uint8 whitePixel[] = {255, 255, 255, 255};
+		object.texture.update(whitePixel);
+		object.sprite.setTexture(object.texture);
+		object.sprite.setScale(50.f, 50.f);
+		object.sprite.setPosition(200, 200);
+		// initial velocity apear not working
+		object.spriteComponents.physics.emplace(sf::Vector2f(300, 300), 3.0f, true);
+		object.spriteComponents.collision = std::make_unique<Vatnar::BoxCollider>();
+
+
+
 	};
+
 	bouncyball.updateFunc = [&](Vatnar::SpriteObject& object, sf::Time dt) {
-		auto &sprite = object.sprite;
-		sprite.setPosition(sprite.getPosition().x,
-			sprite.getPosition().y+object.spriteComponents.physics->velocity.y);
+
+
+
 	};
+
 	if (!game.Init()) {
 		std::cout << "Failed to initialize Vatnar";
 		game.window->close();

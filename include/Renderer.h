@@ -1,10 +1,7 @@
-#ifndef VATNAR_H
-#define VATNAR_H
+#ifndef RENDERER_H
+#define RENDERER_H
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Window/Event.hpp>
-#include <imgui-SFML.h>
-#include <imgui.h>
 #include "Game.h"
 
 namespace Vatnar::Renderer {
@@ -15,4 +12,4 @@ namespace Vatnar::Renderer {
 	void AddDrawable(std::unique_ptr<sf::Drawable> drawable);
 }
 
-#endif // VATNAR_H
+#endif // RENDERER_H

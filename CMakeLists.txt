@@ -18,7 +18,7 @@ add_executable(VatnarLib src/main.cpp
         src/IGameObject.cpp
         src/SpriteObject.cpp
         include/SpriteObject.h
-        include/PhysicsComponent.h
+        include/Components2D.h
         src/Renderer.cpp)
 
 target_include_directories(${PROJECT_NAME} PRIVATE include)
