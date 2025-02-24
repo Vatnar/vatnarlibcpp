@@ -29,55 +29,39 @@ int main() {
 		object.texture.update(whitePixel);
 		object.sprite.setTexture(object.texture);
 		object.sprite.setScale(50.f, 50.f);
-		object.sprite.setPosition(200, 200);
+		object.getPosition() = {100.f, 200.f};
 
-		object.spriteComponents.physics.emplace(true, sf::Vector2f(300, -400), 3.0f);
+		object.components.physics.emplace(true, sf::Vector2f(0, 0), 3.0f);
+		auto circleCollider = std::make_shared<Vatnar::CircleCollider>(&object);
+		object.components.collision = circleCollider;
+		circleCollider->collision.normal = sf::Vector2f(0.f, 0.f);
+		circleCollider->radius = 25.f;
 
-		std::unique_ptr<Vatnar::CircleCollider> circleCollider = std::make_unique<Vatnar::CircleCollider>(&object);
-		object.spriteComponents.collision = std::move(circleCollider);
-
-		// Access and modify the collider safely
-		if (auto *circleColliderPtr = dynamic_cast<Vatnar::CircleCollider*>(object.spriteComponents.collision.get())) {
-			circleColliderPtr->collision.normal = sf::Vector2f(0.f, 0.f);
-			circleColliderPtr->radius = 50.f;
-		}
-
-		// Assign collider to physics component
-		object.spriteComponents.physics->collider = std::move(object.spriteComponents.collision);
-
-		// Add to the game
-		game.AddColliderSprite(object, std::move(object.spriteComponents.physics->collider));
-
+		game.AddColliderSprite(circleCollider);
 
 	};
-	fallingBlock.updateFunc = [&](Vatnar::SpriteObject& object, sf::Time dt) {
-	};
+	fallingBlock.updateFunc = [&](Vatnar::SpriteObject& object, sf::Time dt) {};
 	auto& groundBlock = game.AddObject<Vatnar::SpriteObject>();
 	groundBlock.initFunc = [&](Vatnar::SpriteObject& object) {
 		object.texture.create(1, 1);
 		sf::Uint8 whitePixel[] = {255, 255, 255, 255};
 		object.texture.update(whitePixel);
 		object.sprite.setTexture(object.texture);
-		object.sprite.setScale(50.f, 50.f);
-		object.sprite.setPosition(100, 200);
+		object.sprite.setScale(20.f, 50.f);
 		object.getPosition().x = 100;
-		object.getPosition().y = 200;
+		object.getPosition().y = 400;
 
 
-		std::unique_ptr<Vatnar::CircleCollider> circleCollider = std::make_unique<Vatnar::CircleCollider>(&object);
-		object.spriteComponents.collision = std::move(circleCollider);
+		auto circleCollider = std::make_shared<Vatnar::CircleCollider>(&object);
+		object.components.collision = circleCollider;
+		circleCollider->collision.normal = sf::Vector2f(0.f, 0.f);
+		circleCollider->radius = 25.f;
 
-		auto &collider = object.spriteComponents.collision;
-		collider->collision.normal = sf::Vector2f(0.f, 0.f);
-
-		// Cast to access `radius`
-		if (auto *circleColliderPtr = dynamic_cast<Vatnar::CircleCollider*>(collider.get())) {
-			circleColliderPtr->radius = 50.f;
-		}
-
-		game.AddColliderSprite(object, std::move(collider));
+		game.AddColliderSprite(circleCollider);
 	};
+	groundBlock.updateFunc = [&](Vatnar::SpriteObject& object, sf::Time dt) {
 
+	};
 	if (!game.Init()) {
 		std::cout << "Failed to initialize Vatnar";
 		game.window->close();

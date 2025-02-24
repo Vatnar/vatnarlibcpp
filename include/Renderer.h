@@ -7,7 +7,7 @@
 namespace Vatnar::Renderer {
 	bool WindowInit(sf::RenderWindow &window);
 	bool EventLoop(sf::RenderWindow &window);
-	void Update(const Game &game, sf::Clock &deltaClock);
+	void Update(Game &game, sf::Clock &deltaClock);
 
 	void AddDrawable(std::unique_ptr<sf::Drawable> drawable);
 }

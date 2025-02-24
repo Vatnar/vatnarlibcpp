@@ -16,11 +16,11 @@ namespace Vatnar {
 
 		explicit Game(sf::RenderWindow *window);
 
-		bool Init() const;
+		bool Init();
 
-		void Update(sf::Time dt) const;
+		void Update(sf::Time dt);
 
-		void CheckCollisions2D(sf::Time dt) const;
+		void CheckCollisions2D(sf::Time dt);
 
 		// Delete copy constructor and copy assignment
 		Game(const Game &) = delete;
@@ -55,11 +55,12 @@ namespace Vatnar {
 			T &  ref = *obj;
 
 			objects.push_back(std::move(obj));
+
 			return ref;
 		}
-		void AddColliderSprite(SpriteObject &gameObject, std::unique_ptr<Collider2D> collider) {
+		void AddColliderSprite(std::shared_ptr<Collider2D> collider) {
 
-				colliders.push_back(std::move(collider));
+				colliders.push_back(collider);
 		}
 
 

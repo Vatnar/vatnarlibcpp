@@ -10,22 +10,21 @@
 
 // applies dt
 void Vatnar::SpriteObject::Update(sf::Time dt) {
-	if (spriteComponents.physics) {
-		spriteComponents.physics->Update();
-		position += spriteComponents.physics->velocity;
-		sprite.setPosition(position);
+	if (components.physics.has_value()) {
+		components.physics->Update();
+		position += components.physics->velocity*dt.asSeconds();
 	}
 	if (updateFunc) updateFunc(*this, dt);
+	sprite.setPosition(position);
 
 	Renderer::AddDrawable(std::make_unique<sf::Sprite>(sprite));
 }
 
 bool Vatnar::SpriteObject::Init() {
-	if (spriteComponents.collision) {
-		spriteComponents.physics->collider = std::move(
-			spriteComponents.collision);
-		// Transfer ownership
-	}
+	sprite.setOrigin(sprite.getScale().x/2, sprite.getScale().y/2);
 	if (initFunc) initFunc(*this);
+	if (components.collision && components.physics.has_value()) {
+		components.physics->collider = components.collision;
+	}
 	return true;
 }

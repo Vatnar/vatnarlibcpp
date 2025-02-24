@@ -31,7 +31,7 @@ namespace Vatnar::Renderer {
 		return eventHappened;
 	}
 
-	void Update(const Game &game, sf::Clock &deltaClock) {
+	void Update(Game &game, sf::Clock &deltaClock) {
 		while (game.window->isOpen()) {
 			EventLoop(*game.window);
 			sf::Time dt = deltaClock.restart();

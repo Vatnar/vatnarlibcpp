@@ -8,6 +8,7 @@
 #include "Components2D.h"
 
 namespace Vatnar {
+
 	class SpriteObject final : public IGameObject {
 		// Final for now
 	public:
@@ -15,10 +16,11 @@ namespace Vatnar {
 		sf::Texture                                   texture;
 		std::function<void(SpriteObject &, sf::Time)> updateFunc;
 		std::function<void(SpriteObject &)>           initFunc;
-		struct SpriteComponents {
+		struct Components {
 			std::optional<Physics2D> physics;
-			std::unique_ptr<Collider2D> collision;
-		} spriteComponents;
+			std::shared_ptr<Collider2D> collision;
+		};
+		Components components;
 		void Update(sf::Time dt) override;
 		bool Init() override;
 

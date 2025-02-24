@@ -3,19 +3,27 @@
 #include <vector>
 Vatnar::Game::Game(sf::RenderWindow *window) { this->window = window; }
 
-bool Vatnar::Game::Init() const {
-	for (const auto &obj: this->objects) { obj->Init(); }
+bool Vatnar::Game::Init() {
+	for (const auto &obj: this->objects) {
+		obj->Init();
+		// Add colliders to list
+		if (auto obj2 = dynamic_cast<SpriteObject*>(obj.get())) {
+			if (obj2->components.collision) {
+				std::cout << "Type: " << typeid(obj2->components.collision).name() << std::endl;
+				colliders.push_back(obj2->components.collision);
+			}
+		}
+	}
 	return true;
 }
 
-void Vatnar::Game::Update(sf::Time dt) const {
+void Vatnar::Game::Update(sf::Time dt){
 	// called once per frame
 	for (const auto &obj: this->objects) { obj->Update(dt); }
 }
 
-void Vatnar::Game::CheckCollisions2D(sf::Time dt) const {
+void Vatnar::Game::CheckCollisions2D(sf::Time dt){
 
-	// for loop dont run
 	for (const auto &collider: colliders) {
 		// Create a new vector excluding the current collider
 

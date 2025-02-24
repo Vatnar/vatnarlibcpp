@@ -91,12 +91,12 @@ namespace Vatnar {
 		bool                        affectedByGravity = true;
 		sf::Vector2f                velocity;
 		float                       mass              = 1.0f;
-		std::unique_ptr<Collider2D> collider;
+		std::shared_ptr<Collider2D> collider;
 
 		// Does not apply dt
 		void Update() {
 			if (affectedByGravity) {
-				velocity.y += 15 * 9.81f; // Gravity simulation
+				velocity.y += 9.81f; // Gravity simulation
 			}
 			if (collider && collider->collision.normal != sf::Vector2f(0.f, 0.f)) {
 				auto &normal = collider->collision.normal;
@@ -105,9 +105,7 @@ namespace Vatnar {
 					velocity.y -= mass * mass * normal.y;
 					normal = sf::Vector2f(0, 0); // Reset collision
 				}
-			}
-			// if (collider && collider->collision.normal != sf::Vector2f(0, 0)) {}
-		// }
+		}
 	};
 }
 #endif //PHYSICSCOMPONENT_H
