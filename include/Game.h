@@ -48,7 +48,17 @@ namespace Vatnar {
 		explicit Game(sf::RenderWindow *window);
 
 		bool Init();
-		void Update(sf::Time dt);
+
+		/**
+		 * @brief Calls update for each game object
+		 * @param dt time since last frame
+		 */
+		void Update(sf::Time dt) const;
+
+		/**
+		 * @brief Checks collisions for each collider in the game
+		 * @param dt time since last frame
+		 */
 		void CheckCollisions2D(sf::Time dt);
 
 		// Delete copy constructor and copy assignment
@@ -67,10 +77,7 @@ namespace Vatnar {
 		std::vector<std::shared_ptr<IGameObject> > objects;
 		// colliders "belong" to the objects
 		std::vector<std::shared_ptr<Collider2D> >  colliders;
-
-
-
-
 	};
+	///< Class for managing game data and function.
 }
 #endif //GAME_H

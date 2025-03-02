@@ -11,6 +11,7 @@
 #include "SpriteObject.h"
 
 using namespace Vatnar;
+
 int main() {
 	sf::RenderWindow window(sf::VideoMode({800, 600}), "game");
 	Game game(&window);
@@ -22,10 +23,10 @@ int main() {
 
 
 	sf::Clock deltaClock;
-	auto fallingBlock = game.AddObject<SpriteObject>();
+	const auto fallingBlock = game.AddObject<SpriteObject>();
 	assert(fallingBlock && "fallingBlock is nullptr!");
 
-	fallingBlock->initFunc = [&](SpriteObject& object) {
+	fallingBlock->initFunc = [&](SpriteObject &object) {
 		object.texture.create(1, 1);
 		sf::Uint8 whitePixel[] = {255, 255, 255, 255};
 		object.texture.update(whitePixel);
@@ -40,14 +41,14 @@ int main() {
 		collider->collision.normal = sf::Vector2f(0.f, 0.f);
 
 		CircleCollider::SetRadius(collider, 25.0f);
-
 	};
-	fallingBlock->updateFunc = [&](SpriteObject& object, sf::Time dt) {};
+	fallingBlock->updateFunc = [&](SpriteObject &object, sf::Time dt) {
+	};
 
 
 	auto groundBlock = game.AddObject<SpriteObject>();
 
-	groundBlock->initFunc = [&](SpriteObject& object) {
+	groundBlock->initFunc = [&](SpriteObject &object) {
 		object.texture.create(1, 1);
 		sf::Uint8 whitePixel[] = {255, 255, 255, 255};
 		object.texture.update(whitePixel);
@@ -62,7 +63,7 @@ int main() {
 		CircleCollider::SetRadius(collision, 25.f);
 	};
 	auto groundBlock2 = game.AddObject<SpriteObject>();
-	groundBlock2->initFunc = [&](SpriteObject& object) {
+	groundBlock2->initFunc = [&](SpriteObject &object) {
 		object.texture.create(1, 1);
 		sf::Uint8 whitePixel[] = {255, 255, 255, 255};
 		object.texture.update(whitePixel);
@@ -85,4 +86,6 @@ int main() {
 	}
 	Renderer::Update(game, deltaClock);
 	ImGui::SFML::Shutdown();
+	exit(EXIT_SUCCESS);
 }
+

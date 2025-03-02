@@ -8,7 +8,7 @@ namespace Vatnar::Renderer {
 	std::vector<std::unique_ptr<sf::Drawable>> perFrameObjects;
 
 	bool WindowInit(sf::RenderWindow &window) {
-		window.setFramerateLimit(60);
+		window.setFramerateLimit(144);
 		ImGui::SFML::Init(window);
 		return true;
 	}
