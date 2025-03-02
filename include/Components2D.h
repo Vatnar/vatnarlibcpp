@@ -20,6 +20,9 @@ namespace Vatnar {
 		IGameObject *parent = nullptr;
 		Collision2D  collision;
 
+		explicit Collider2D(IGameObject* parentObject) {
+			parent = parentObject;
+		}
 		virtual ~Collider2D() = default;
 
 		virtual void Update(
@@ -58,10 +61,8 @@ namespace Vatnar {
 
 	struct CircleCollider final : Collider2D {
 		float radius = 100;
-		CircleCollider() = default;
-		explicit CircleCollider(IGameObject* parentObject) {
-			parent = parentObject;
-		}
+		explicit CircleCollider(IGameObject* parentObject) : Collider2D(parentObject) {}
+
 		void Update(std::vector<std::shared_ptr<Collider2D> >
 			otherColliders, sf::Time dt) override {
 			// Current implementation returns on first collision, so one collision per fram
@@ -72,17 +73,22 @@ namespace Vatnar {
 					auto otherPos = other->parent->getPosition();
 					sf::Vector2f diff = otherPos - pos;
 					if (std::hypot(diff.x, diff.y) <= radius +other->radius) {
+
 						collision.normal = diff;
-						std::cout << "Distanec" <<std::hypot(diff.x, diff.y)<< std::endl;
+						otherCollider->collision.normal = -diff;
 						return;
 					}
 				}
 			}
-			collision.normal = {0, 0};
 		}
-
+		static bool SetRadius(std::shared_ptr<Collider2D> collider, float radius) {
+			if (collider == nullptr) return false;
+			if (auto* circleCollider = dynamic_cast<CircleCollider*>(collider.get()))
+				circleCollider->radius = radius;
+			else return false;
+			return true;
+		}
 		void Init() override {
-			// Add to callable list.
 		}
 	};
 

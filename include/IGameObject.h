@@ -1,23 +1,28 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 #include <SFML/System/Vector2.hpp>
-#include <SFML/System/Clock.hpp>
+
+namespace sf { class Time; }
+
 namespace Vatnar {
 	class IGameObject {
 	protected:
-		sf::Vector2f position; // Store object's position
+		sf::Vector2f position;
 
 	public:
 		virtual ~IGameObject() = default;
 
-		virtual sf::Vector2f &getPosition() {
-			return position;
-		}
-
+		/**
+		 *
+		 * @return reference to sf::Vector2f position
+		 */
+		sf::Vector2f &getPosition();
 
 		virtual bool Init() = 0;
 
-		virtual void Update(sf::Time dt) {}
+		virtual void Update(const sf::Time &dt) {}
 	};
+
+
 }
 #endif //GAMEOBJECT_H

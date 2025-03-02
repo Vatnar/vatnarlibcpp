@@ -10,18 +10,12 @@ find_package(ImGui-SFML REQUIRED)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 
-add_executable(VatnarLib src/main.cpp
-        include/Renderer.h
-        include/Game.h
-        src/Game.cpp
-        include/IGameObject.h
-        src/IGameObject.cpp
-        src/SpriteObject.cpp
-        include/SpriteObject.h
-        include/Components2D.h
-        src/Renderer.cpp)
 
-target_include_directories(${PROJECT_NAME} PRIVATE include)
+file(GLOB_RECURSE SOURCES "src/*.cpp")
+add_executable(VatnarLib ${SOURCES})
+
+target_include_directories(VatnarLib PRIVATE ${CMAKE_SOURCE_DIR}/include)
+
 target_link_libraries(${PROJECT_NAME} PRIVATE
         sfml-graphics sfml-window sfml-system
         ImGui-SFML::ImGui-SFML)

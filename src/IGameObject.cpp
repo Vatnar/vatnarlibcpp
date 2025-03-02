@@ -1,3 +1,6 @@
-//
-// Created by peter on 22/02/2025.
-//
+#include "IGameObject.h"
+namespace Vatnar {
+    sf::Vector2f & IGameObject::getPosition() {
+        return position;
+    }
+}

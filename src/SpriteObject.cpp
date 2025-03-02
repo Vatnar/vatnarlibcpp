@@ -3,13 +3,10 @@
 //
 
 #include "SpriteObject.h"
-
-#include <iostream>
-
 #include "Renderer.h"
 
 // applies dt
-void Vatnar::SpriteObject::Update(sf::Time dt) {
+void Vatnar::SpriteObject::Update(const sf::Time &dt) {
 	if (components.physics.has_value()) {
 		components.physics->Update();
 		position += components.physics->velocity*dt.asSeconds();

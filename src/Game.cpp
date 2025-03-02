@@ -9,7 +9,6 @@ bool Vatnar::Game::Init() {
 		// Add colliders to list
 		if (auto obj2 = dynamic_cast<SpriteObject*>(obj.get())) {
 			if (obj2->components.collision) {
-				std::cout << "Type: " << typeid(obj2->components.collision).name() << std::endl;
 				colliders.push_back(obj2->components.collision);
 			}
 		}
